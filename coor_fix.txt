@@ -1,0 +1,56 @@
+{$CLEO .cs}
+
+0000: NOP
+
+0@ = 0 // Bribe fixed
+1@ = 0 // Knife fixed
+2@ = 0 // sf_country_rifle
+
+:FIX_PICKUPS
+wait 0
+
+if
+    0@ == 0
+then
+    if
+        does_pickup_exist $3373
+    then
+        remove_pickup $3373
+        $3373 = create_pickup 1247 {pickupType} PickupType.OnStreetSlow {x} 2120.0 {y} 96.39 {z} 39.0
+        0@ = 1
+    end
+end
+
+if
+    1@ == 0
+then
+    if
+        does_pickup_exist $3128
+    then
+        remove_pickup $3128
+        $3128 = create_pickup 335 {pickupType} PickupType.OnStreetSlow {x} -1877.0 {y} 351.0 {z} 26.0
+        1@ = 1
+    end
+end
+
+if
+    2@ == 0
+then
+    if
+        does_pickup_exist $3109
+    then
+        remove_pickup $3109
+        $3109 = create_pickup_with_ammo 357 {pickupType} PickupType.OnStreetSlow {ammo} 30 {x} -2094.0 {y} -492.0 {z} 36.0
+        2@ = 1
+    end
+end
+
+if and
+    0@ == 1
+    1@ == 1
+    2@ == 1
+then
+    terminate_this_script
+end
+
+jump @FIX_PICKUPS
