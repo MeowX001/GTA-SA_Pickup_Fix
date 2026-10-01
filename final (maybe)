@@ -1,0 +1,92 @@
+{$CLEO .cs}
+{$USE CLEO+}
+
+0000: NOP
+
+0@ = 0 // Bribe fixed
+1@ = 0 // Knife fixed
+2@ = 0 // sf_country_rifle
+//3@ = 0 //cleaning_the_hood baseball bat fix
+
+:FIX_PICKUPS
+wait 0
+
+// Bribe fixed
+if
+    0@ == 0
+then
+    if
+        does_pickup_exist $3373
+    then
+        remove_pickup $3373
+        $3373 = create_pickup 1247 {pickupType} PickupType.OnStreetSlow {x} 2120.0 {y} 96.39 {z} 39.0
+        0@ = 1
+    end
+end
+
+// Knife fixed
+if
+    1@ == 0
+then
+    if
+        does_pickup_exist $3128
+    then
+        remove_pickup $3128
+        $3128 = create_pickup 335 {pickupType} PickupType.OnStreetSlow {x} -1877.0 {y} 351.0 {z} 26.0
+        1@ = 1
+    end
+end
+
+// sf_country_rifle
+if
+    2@ == 0
+then
+    if
+        does_pickup_exist $3109
+    then
+        remove_pickup $3109
+        $3109 = create_pickup_with_ammo 357 {pickupType} PickupType.OnStreetSlow {ammo} 30 {x} -2094.0 {y} -491.0 {z} 36.0
+        2@ = 1
+    end
+end
+
+if
+    0E33: get_pickup_this_coord 2285.7429 -1647.3091 14.0782 only_available 1 store_to 4@
+then
+    0E34: get_pickup_model 4@ 5@
+    if
+        5@ == 336
+    then
+        remove_pickup 4@
+
+        7@ = 0
+        if
+            0E33: get_pickup_this_coord 2285.7429 -1647.3091 15.0782 only_available 1 store_to 6@
+        then
+            0E34: get_pickup_model 6@ 5@
+            if
+                5@ == 336
+            then
+                7@ = 1
+            end
+        end
+
+        if
+            7@ == 0
+        then
+            6@ = create_pickup 336 {pickupType} PickupType.Once {x} 2285.7429 {y} -1647.3091 {z} 15.0782
+        end
+    end
+end
+
+if and
+    0@ == 1
+    1@ == 1
+    2@ == 1
+    $flag_sweet_mission_counter > 1
+    $onmission == 0
+then
+    terminate_this_script
+end
+
+jump @FIX_PICKUPS
