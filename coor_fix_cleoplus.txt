@@ -6,7 +6,7 @@
 0@ = 0 // Bribe fixed
 1@ = 0 // Knife fixed
 2@ = 0 // sf_country_rifle
-3@ == 0 //cleaning_the_hood baseball bat fix
+3@ = 0 //cleaning_the_hood baseball bat fix
 
 :FIX_PICKUPS
 wait 0
